@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/task.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/screens/widgets/task_card.dart';
 
 class ListTab extends StatefulWidget {
@@ -16,34 +18,17 @@ class _ListTabState extends State<ListTab> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 24.0),
-      child: ListView(
-        children: [
-          TaskCard(
-            task: Task(
-              title: "Play basket ball",
-              datetime: DateTime.now()
-            ),
-          ),
-          TaskCard(
-            task: Task(
-              title: "Play basket ball",
-              datetime: DateTime.now()
-            ),
-          ),
-          TaskCard(
-            task: Task(
-              title: "Play basket ball",
-              datetime: DateTime.now()
-            )..isDone = true,
-          ),
-          TaskCard(
-            task: Task(
-              title: "Play basket ball",
-              datetime: DateTime.now()
-            ),
-          ),
-
-        ],
+      child: Consumer<TasksProvider>(
+        builder: (context, tasksProvider, _) {
+          return ListView.builder(
+            itemCount: tasksProvider.tasks.length,
+            itemBuilder: (context, index) {
+              return TaskCard(
+                task: tasksProvider.tasks[index],
+              );
+            },
+          );
+        }
       ),
     );
   }

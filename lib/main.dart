@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/providers/selected_day_provider.dart';
 import 'package:todo_app/providers/settings_provider.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/screens/main_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     MultiProvider(
         providers: [
-          ChangeNotifierProvider<SettingsProvider>(create: (context) => SettingsProvider(),)
+          ChangeNotifierProvider<SettingsProvider>(create: (context) => SettingsProvider(),),
+          ChangeNotifierProvider<SelectedDayProvider>(create: (context) => SelectedDayProvider(),),
+          ChangeNotifierProxyProvider<SelectedDayProvider, TasksProvider>(
+            create: (context) => TasksProvider(),
+            update: (context, value, previous) => TasksProvider(value),
+          ),
         ],
         child: const MyApp()
     )

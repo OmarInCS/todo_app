@@ -17,7 +17,8 @@ class SettingsProvider with ChangeNotifier {
   }
 
   void changeTheme(String theme) {
-    currentTheme = theme == "Light" ? darkTheme : lightTheme;
+    print(theme);
+    currentTheme = theme == "Light" ? lightTheme : darkTheme;
     notifyListeners();
   }
 

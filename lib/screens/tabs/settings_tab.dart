@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/settings_provider.dart';
 
+import '../../constants/app_theme.dart';
+
 class SettingsTab extends StatefulWidget {
   const SettingsTab({Key? key}) : super(key: key);
 
@@ -25,6 +27,10 @@ class _SettingsTabState extends State<SettingsTab> {
         SizedBox(height: 8,),
         DropdownButton(
           value: currentLanguage,
+          style: currentThemeName == "Dark" ? TextStyle(
+              color: onPrimarySelectedDark
+          ) : null,
+          dropdownColor: currentThemeName == "Dark" ? primaryDark : null,
           items: [
             DropdownMenuItem<String>(
               child: Text("Arabic"),
@@ -44,6 +50,10 @@ class _SettingsTabState extends State<SettingsTab> {
         SizedBox(height: 8,),
         DropdownButton(
           value: currentThemeName,
+          style: currentThemeName == "Dark" ? TextStyle(
+              color: onPrimarySelectedDark
+          ) : null,
+          dropdownColor: currentThemeName == "Dark" ? primaryDark : null,
           items: [
             DropdownMenuItem<String>(
               child: Text("Dark"),
